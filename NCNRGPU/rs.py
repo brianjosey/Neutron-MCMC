@@ -7,20 +7,23 @@
 #        lead to MC not starting up
 
 from __future__ import print_function
-from math import fabs, pow, floor, ceil, sqrt, log10, log
-from numpy import cumsum, subtract, minimum, maximum, sum, average, array, mean, std
-from operator import itemgetter
-from os import getcwd, remove, rename, path, kill, devnull, mkdir
-from random import seed, normalvariate, random
-from re import VERBOSE, IGNORECASE, compile
-from scipy import stats, sqrt, special, ndimage, signal
-from shutil import rmtree, make_archive
-from sys import argv, exit
-from subprocess import call, Popen
-from time import time, gmtime, sleep, ctime
+
 import zipfile
+from math import ceil, fabs, floor, log, log10, pow, sqrt
+from operator import itemgetter
+from os import devnull, getcwd, kill, mkdir, path, remove, rename
+from random import normalvariate, random, seed
+from re import IGNORECASE, VERBOSE, compile
+from shutil import make_archive, rmtree
+from subprocess import Popen, call
+from sys import argv, exit
+from time import ctime, gmtime, sleep, time
+
 import numpy
 import pandas
+from numpy import (array, average, cumsum, maximum, mean, minimum, std,
+                   subtract, sum)
+from scipy import ndimage, signal, special, sqrt, stats
 
 
 class CDataInteractor():
@@ -1932,7 +1935,7 @@ class CReflectometry:
 
     def fnPlotMolgroups(self, sPath):
 
-        from matplotlib.font_manager import fontManager, FontProperties
+        from matplotlib.font_manager import FontProperties, fontManager
 
         font = FontProperties(size='x-small')
         plotname = 'Molgroups'
@@ -2089,7 +2092,7 @@ class CReflectometry:
 
     def fnPlotFit(self, plotname):
 
-        from matplotlib.font_manager import fontManager, FontProperties
+        from matplotlib.font_manager import FontProperties, fontManager
 
         font = FontProperties(size='x-small')
 
@@ -2350,9 +2353,10 @@ class CReflectometry:
 
         #Recreates profile and fit data associated with stat file
 
-        from refl1d import garefl
-        import matplotlib.pyplot as plt
         from sys import stdout
+
+        import matplotlib.pyplot as plt
+        from refl1d import garefl
 
         self.fnLoadParameters()  #Load Parameters into self.diParameters
         self.fnLoadStatData(sparse)  #Load Results from statistical analysis
@@ -3752,8 +3756,8 @@ if __name__ == '__main__':
                     fConvergence = float(argv[i + 1])
                 AutoFinish(fConvergence)
             elif argv[i] == '-fit':
-                import numpy as np
                 import matplotlib.pyplot as plt
+                import numpy as np
 
                 if len(argv) > i + 1:
                     plotname = argv[i + 1]
@@ -3765,8 +3769,8 @@ if __name__ == '__main__':
                     fConvergence = float(argv[i + 1])
                 iAutoFinish2 = 1
             elif argv[i] == '-mol':
-                import numpy as np
                 import matplotlib.pyplot as plt
+                import numpy as np
 
                 bDisplayMolgroups = True
             elif argv[i] == '-t':
@@ -3934,5 +3938,3 @@ if __name__ == '__main__':
             StatTable(sTableTemplate, fConfidence)
         elif iPullMolgroups:
             ReflPar.fnPullMolgroup(liMolgroups, fSparse)
-
-
